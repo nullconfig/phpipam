@@ -3,9 +3,9 @@ entries:
   phpipam:
   - apiVersion: v1
     appVersion: "1.5"
-    created: "2022-04-16T01:11:10.3321361-07:00"
+    created: "2022-04-16T02:00:39.2901573-07:00"
     description: phpipam server
-    digest: f5bc2fd64295b2df65cdfee80f6056d4d149e8fee94958f192daa6d7377c959c
+    digest: ab349923f1c1e3ac0cd08a13a34342fc23c6fc4cd986fd2a38699482282306d7
     home: https://phpipam.net
     kubeVersion: ^1.19.0-0
     maintainers:
@@ -13,9 +13,9 @@ entries:
       name: bgalloway
     name: phpipam
     sources:
-    - https://nullconfig.github.io/phpipam/
+    - https://github.com/nullconfig/phpipam
     type: application
     urls:
-    - phpipam-1.0.0.tgz
+    - https://nullconfig.github.io/phpipam/stable/phpipam-1.0.0.tgz
     version: 1.0.0
-generated: "2022-04-16T01:11:10.3249281-07:00"
+generated: "2022-04-16T02:00:39.2841827-07:00"
