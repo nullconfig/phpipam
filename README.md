@@ -19,14 +19,18 @@
 
 Kubernetes: `^1.19.0-0`
 
-Create the namespace
-```
-kubectl create namespace phpipam
-```
 Create the mariadb secret
 ```
 kubectl create secret generic mysql-password --from-literal='password=<password>' -n phpipam
 ```
+
+Installing phpipam 
+```console
+helm repo add phpipam https://nullconfig.github.io/phpipam/stable
+helm repo update
+helm install --namespace phpipam --create-namespace phpipam phpipam/phpipam
+```
+
 
 Creating a backup of the database
 ```
