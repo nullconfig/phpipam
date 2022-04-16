@@ -7,7 +7,7 @@ Once Helm is set up properly, add the repo as follows:
 
 ```console
 helm repo add phpipam https://nullconfig.github.io/phpipam/stable
-
+```
 You can then run `helm search repo phpipam` to see the charts.
 
 ## Contributing
