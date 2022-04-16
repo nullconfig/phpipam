@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ipam.fullname" . }}
+  labels:
+    app: {{ template "ipam.fullname" . }}
+    chart: {{ template "ipam.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "ipam.fullname" .  }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "ipam.fullname" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: {{ template "ipam.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ template "ipam.fullname" . }}
+      containers:
+        - name: phpipam-web
+          image: "{{ .Values.phpipamWeb.image.repository }}:{{ .Values.phpipamWeb.image.tag }}"
+          imagePullPolicy: {{ .Values.phpipamWeb.image.pullPolicy }}
+          env:
+{{ toYaml .Values.phpipamWeb.env | indent 12 }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            timeoutSeconds: 30
+          resources:
+{{ toYaml .Values.phpipamWeb.resources | indent 12 }}
+        - name: phpipam-mariadb
+          image: "{{ .Values.phpipamMariadb.image.repository }}:{{ .Values.phpipamMariadb.image.tag }}"
+          imagePullPolicy: {{ .Values.phpipamMariadb.image.pullPolicy }}
+          env:
+{{ toYaml .Values.phpipamMariadb.env | indent 12 }}
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - name: {{ template "ipam.fullname" . }}
+{{ toYaml .Values.phpipamMariadb.volumeMounts | indent 14 }}
+          resources:
+{{ toYaml .Values.phpipamMariadb.resources | indent 12 }}
+        - name: phpipam-cron
+          image: "{{ .Values.phpipamCron.image.repository }}:{{ .Values.phpipamCron.image.tag }}"
+          imagePullPolicy: {{ .Values.phpipamCron.image.pullPolicy }}
+          env:
+{{ toYaml .Values.phpipamCron.env | indent 12 }}
+          resources:
+{{ toYaml .Values.phpipamCron.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
