@@ -16,6 +16,6 @@ entries:
     - https://github.com/nullconfig/phpipam
     type: application
     urls:
-    - https://nullconfig.github.io/phpipam/stable/phpipam-1.0.0.tgz
+    - https://nullconfig.github.io/phpipam
     version: 1.0.0
 generated: "2022-04-15T23:12:59.3358632-07:00"
