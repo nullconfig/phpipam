@@ -1,11 +1,11 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: "1.5"
 description: phpipam server
 name: phpipam
 home: https://phpipam.net
 sources: 
 - https://github.com/nullconfig/phpipam
-version: 1.0.0
+version: 1.0.1
 maintainers:
   - name: bgalloway
     email: nullconfig@gmail.com

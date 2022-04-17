@@ -84,14 +84,14 @@ phpipamMariadb:
     pullPolicy: IfNotPresent
 
   persistentVolume: 
-    enabled: false
-    # accessModes: 
-    #   - ReadWriteOnce
-    # storageClass: default
-    # size: 4Gi
+    enabled: true
+    accessModes: 
+      - ReadWriteOnce
+    storageClass: default
+    size: 4Gi
 
-  volumeMounts: {}
-    # mountPath: /var/lib/mysql
+  volumeMounts:
+    mountPath: /var/lib/mysql
 
   env:
     - name: MARIADB_ROOT_PASSWORD
