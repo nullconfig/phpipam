@@ -1,7 +1,8 @@
 # phpipam
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5](https://img.shields.io/badge/AppVersion-1.5-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.5](https://img.shields.io/badge/AppVersion-1.5-informational?style=flat-square)[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/phpipam)](https://artifacthub.io/packages/search?repo=phpipam)
 
+phpipam is an open-source web IP address management application (IPAM). Its goal is to provide light, modern and useful IP address management. It is php-based application with MySQL database backend, using jQuery libraries, ajax and HTML5/CSS3 features.
 
 **Homepage:** <https://phpipam.net>
 
