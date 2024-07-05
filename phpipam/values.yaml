@@ -4,9 +4,28 @@ nodeSelector: {}
 affinity: {}
 tolerations: {}
 
+additionalConfigMaps: []
+  # - name: ldap-config
+  #   data:
+  #     ldap.conf: |
+  #       ...
+  #       TLS_CACERT /etc/ipa/ca.crt
+  #       ...
+
+additionalVolumes: []
+  # - name: ldap-config
+  #   configMap:
+  #     name: ldap-config
+
+  # An example of a secret that can be mounted on /etc/ipa/ca.crt containing the CA certificate
+  # The secret should be created in the same namespace as the phpipam deployment
+  # - name: ldap-ca-cert
+  #   secret:
+  #     secretName: ldap-ca-cert
+
 phpipamWeb:
   name: phpipam-web
-  image: 
+  image:
     repository: phpipam/phpipam-www
     tag: 1.5x
     pullPolicy: IfNotPresent
@@ -42,7 +61,7 @@ phpipamWeb:
       value: "%"
     - name: IPAM_DATABASE_PASS
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           key: password
           name: mysql-password
   service:
@@ -51,16 +70,16 @@ phpipamWeb:
 
 phpipamCron:
   name: phpipam-cron
-  image: 
+  image:
     repository: phpipam/phpipam-cron
-    tag: 1.5x
+    tag: 1.6x
     pullPolicy: IfNotPresent
   env:
     - name: IPAM_DATABASE_HOST
       value: phpipam-db
     - name: IPAM_DATABASE_PASS
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           key: password
           name: mysql-password
     - name: SCAN_INTERVAL
@@ -78,14 +97,14 @@ phpipamCron:
 
 phpipamMariadb:
   name: phpipam-db
-  image: 
+  image:
     repository: mariadb
     tag: 10.7.3
     pullPolicy: IfNotPresent
 
-  persistentVolume: 
+  persistentVolume:
     enabled: true
-    accessModes: 
+    accessModes:
       - ReadWriteOnce
     storageClass: default
     size: 4Gi
@@ -96,7 +115,7 @@ phpipamMariadb:
   env:
     - name: MARIADB_ROOT_PASSWORD
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           key: password
           name: mysql-password
 

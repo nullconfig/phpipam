@@ -8,7 +8,7 @@ phpipam is an open-source web IP address management application (IPAM). Its goal
 
 ## Maintainers
 
-| Name | Email | 
+| Name | Email |
 | ---- | ------ |
 | bgalloway | <nullconfig@gmail.com> |
 
@@ -25,7 +25,7 @@ Create the mariadb secret
 kubectl create secret generic mysql-password --from-literal='password=<password>' -n phpipam
 ```
 
-Installing phpipam 
+Installing phpipam
 ```console
 helm repo add phpipam https://nullconfig.github.io/phpipam/stable
 helm repo update
@@ -49,6 +49,8 @@ mysql -u phpipam -p phpipam < phpipam_migration_database.sql
 | affinity | object | `{}` |  |
 | namespace | string | `"phpipam"` |  |
 | nodeSelector | object | `{}` |  |
+| additionalVolumes | list | `[]` |
+| additionalConfigMaps | list | `[]` |
 | phpipamCron.env[0].name | string | `"IPAM_DATABASE_HOST"` |  |
 | phpipamCron.env[0].value | string | `"phpipam-db"` |  |
 | phpipamCron.env[1].name | string | `"IPAM_DATABASE_PASS"` |  |
@@ -103,4 +105,3 @@ mysql -u phpipam -p phpipam < phpipam_migration_database.sql
 | tolerations | object | `{}` |  |
 
 ----------------------------------------------
-

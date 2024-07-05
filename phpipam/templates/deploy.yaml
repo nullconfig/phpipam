@@ -23,12 +23,19 @@ spec:
         - name: {{ template "ipam.fullname" . }}
           persistentVolumeClaim:
             claimName: {{ template "ipam.fullname" . }}
+        {{- if .Values.additionalVolumes }}
+          {{- toYaml .Values.additionalVolumes | nindent 8 }}
+        {{- end }}
       containers:
         - name: phpipam-web
           image: "{{ .Values.phpipamWeb.image.repository }}:{{ .Values.phpipamWeb.image.tag }}"
           imagePullPolicy: {{ .Values.phpipamWeb.image.pullPolicy }}
           env:
-{{ toYaml .Values.phpipamWeb.env | indent 12 }}
+            {{- toYaml .Values.phpipamWeb.env | nindent 12 }}
+          {{- if .Values.phpipamWeb.volumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.phpipamWeb.volumeMounts | nindent 12 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 80
@@ -44,37 +51,41 @@ spec:
               port: 80
             timeoutSeconds: 30
           resources:
-{{ toYaml .Values.phpipamWeb.resources | indent 12 }}
+            {{- toYaml .Values.phpipamWeb.resources | nindent 12 }}
         - name: phpipam-mariadb
           image: "{{ .Values.phpipamMariadb.image.repository }}:{{ .Values.phpipamMariadb.image.tag }}"
           imagePullPolicy: {{ .Values.phpipamMariadb.image.pullPolicy }}
           env:
-{{ toYaml .Values.phpipamMariadb.env | indent 12 }}
+            {{- toYaml .Values.phpipamMariadb.env | nindent 12 }}
           ports:
             - name: mysql
               containerPort: 3306
               protocol: TCP
           volumeMounts:
             - name: {{ template "ipam.fullname" . }}
-{{ toYaml .Values.phpipamMariadb.volumeMounts | indent 14 }}
+            {{- toYaml .Values.phpipamMariadb.volumeMounts | nindent 14 }}
           resources:
-{{ toYaml .Values.phpipamMariadb.resources | indent 12 }}
+            {{- toYaml .Values.phpipamMariadb.resources | nindent 12 }}
         - name: phpipam-cron
           image: "{{ .Values.phpipamCron.image.repository }}:{{ .Values.phpipamCron.image.tag }}"
           imagePullPolicy: {{ .Values.phpipamCron.image.pullPolicy }}
           env:
-{{ toYaml .Values.phpipamCron.env | indent 12 }}
+            {{- toYaml .Values.phpipamCron.env | nindent 12 }}
+          {{- if .Values.phpipamCron.volumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.phpipamCron.volumeMounts | nindent 12 }}
+          {{- end }}
           resources:
-{{ toYaml .Values.phpipamCron.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.phpipamCron.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
       tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
